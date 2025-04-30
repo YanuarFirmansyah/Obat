@@ -15,23 +15,46 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                'nama' => 'iqbal',
-                'alamat' => 'Jl kebangsaan',
-                'no_hp' => '0822917181',
-                'role' => 'pasien',
+                'nama' => 'Iqbal',
+                'alamat' => 'Jl Imam Bonjol',
+                'no_hp' => '090990909',
+                'role' => 'dokter',
                 'email' => 'iqbal@gmail.com',
                 'password' => 'password'
             ],
             [
-                'nama' => 'jiah',
-                'alamat' => 'Jl kekuasaan',
-                'no_hp' => '081313131242',
+                'nama' => 'neena',
+                'alamat' => 'Jl Imam Bonjol',
+                'no_hp' => '09087878',
                 'role' => 'dokter',
-                'email' => 'jadadhl@gmail.com',
+                'email' => 'neena@gmail.com',
                 'password' => 'password'
             ],
-        ];
-
+            [
+                'nama' => 'Budi',
+                'alamat' => 'Jl Imam Bonjol',
+                'no_hp' => '09087822278',
+                'role' => 'pasien',
+                'email' => 'budi@gmail.com',
+                'password' => 'password'
+            ],
+            [
+                'nama' => 'Doremi',
+                'alamat' => 'Jl Imam Bonjol10',
+                'no_hp' => '090878212278',
+                'role' => 'pasien',
+                'email' => 'doremi@gmail.com',
+                'password' => 'password'
+            ],
+            [
+                'nama' => 'Fasola',
+                'alamat' => 'Jl Imam Bonjol10',
+                'no_hp' => '033878212278',
+                'role' => 'pasien',
+                'email' => 'fasola@gmail.com',
+                'password' => 'password'
+            ]
+            ];
         foreach($data as $d){
             User::create([
                 'nama' => $d['nama'],
@@ -39,7 +62,7 @@ class UserSeeder extends Seeder
                 'password' => $d['password'],
                 'alamat' => $d['alamat'],
                 'no_hp' => $d['no_hp'],
-                'role' => $d['role'],
+                'role' => $d['role']
             ]);
         }
     }
