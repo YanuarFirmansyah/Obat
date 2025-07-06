@@ -26,26 +26,30 @@
                 <h3 class="card-title">Form Periksa</h3>
             </div><!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('pasien.store') }}" method="POST">
-                  @csrf
-                  <div class="card-body">
-                      <div class="form-group">
-                          <label>Dokter</label>
-                          <select class="custom-select" name="id_dokter">
-                              <option value="">Pilih Dokter</option>
-                              @foreach ($dokters as $dokter)
-                                  <option value="{{ $dokter->id }}">{{ $dokter->nama }}</option>
-                              @endforeach
-                          </select>
-                      </div>
-                  </div>
-                  <div class="card-footer text-right">
-                      <button type="submit" class="btn btn-primary">
-                          <i class="fas fa-save"></i>&nbsp; Simpan
-                      </button>
-                  </div>
-              </form>
-          </div><!-- /.card -->
+            <div class="card-body">
+                <form action="{{ route('pasien.periksa.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="id_dokter">Dokter</label>
+                        <select class="custom-select" name="id_dokter" id="id_dokter" required>
+                            <option value="">Pilih Dokter</option>
+                            @foreach ($dokters as $dokter)
+                                <option value="{{ $dokter->id }}">{{ $dokter->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="keluhan">Keluhan</label>
+                        <textarea class="form-control" name="keluhan" id="keluhan" rows="2" required></textarea>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>&nbsp; Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.card -->
         </div>
         <div class="col-12">
             <div class="card card-primary">
@@ -102,3 +106,19 @@
         </div>
     </div>
 </div>
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle"></i> {{ session('success') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+@push('scripts')
+<script>
+$(function() {
+    // Hilangkan filter poli dan jadwal, hanya dokter saja
+    // Tidak perlu JS filter
+});
+</script>
+@endpush

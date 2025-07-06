@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relation\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -24,8 +24,10 @@ class User extends Authenticatable
         'password',
         'no_hp',
         'role',
-        'alamat'
-
+        'alamat',
+        'no_rm',
+        'no_ktp',
+        'id_poli',
     ];
 
     // relasi Ke periksa sebagai Pasien
@@ -35,6 +37,18 @@ class User extends Authenticatable
 
     public function dokter(): HasMany{
         return $this->hasMany(Periksa::class, 'id_dokter');
+    }
+
+    // Relasi ke jadwal periksa (untuk dokter)
+    public function jadwalPeriksas()
+    {
+        // Pastikan relasi ke jadwal periksa benar dan return collection, bukan null
+        return $this->hasMany(\App\Models\JadwalPeriksa::class, 'id_dokter', 'id');
+    }
+
+    public function poli()
+    {
+        return $this->belongsTo(\App\Models\Poli::class, 'id_poli');
     }
 
     /**

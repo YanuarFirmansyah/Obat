@@ -124,6 +124,15 @@
         <form action="{{ route('register') }}" method="POST">
           @csrf
           <div class="mb-3">
+            <label for="no_ktp" class="form-label">No KTP</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0">
+                <i class="fas fa-id-card text-muted"></i>
+              </span>
+              <input type="text" class="form-control border-start-0" id="no_ktp" name="no_ktp" placeholder="Masukkan No KTP" required maxlength="20">
+            </div>
+          </div>
+          <div class="mb-3">
             <label for="nama" class="form-label">Nama Lengkap</label>
             <div class="input-group">
               <span class="input-group-text bg-light border-end-0">
@@ -178,6 +187,9 @@
 
           <div class="d-grid mb-4">
             <button type="submit" class="btn btn-primary w-100">Daftar</button>
+            <div class="mt-2 text-muted" style="font-size: 0.9em;">
+                <i class="fas fa-info-circle"></i> No RM akan digenerate otomatis setelah pendaftaran.
+            </div>
           </div>
 
           <div class="text-center">

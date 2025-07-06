@@ -20,10 +20,14 @@ class RoleMiddleware
             return redirect('/login');
         }
 
-        if (in_array(Auth::user()->role, $roles)) {
+        $userRole = strtolower(trim(Auth::user()->role));
+        $roles = array_map('strtolower', array_map('trim', $roles));
+        // Jika role kosong, izinkan semua role (fallback)
+        if (empty($roles) || in_array($userRole, $roles)) {
             return $next($request);
         }
 
+        // Untuk debug, bisa tambahkan log jika perlu
         abort(403, 'Unauthorized.');
       }
 

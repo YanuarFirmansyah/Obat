@@ -40,22 +40,24 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Pasien</th>
+                                <th>Keluhan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($periksas as $index => $periksa)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $periksa->pasien->nama }}</td>
-                                <td>
-                                    @if ($periksa->status === 'Belum Diperiksa')
-                                        <a href="{{ route('dokter.periksa.form', $periksa->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-syringe"></i>&nbsp; Periksa</a>
-                                    @else
-                                        <a href="{{ route('dokter.edit.form', $periksa->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-pen-nib"></i>&nbsp; Edit</a>
-                                    @endif
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $periksa->pasien->nama }}</td>
+                                    <td>{{ $periksa->keluhan ?? '-' }}</td>
+                                    <td>
+                                        @if ($periksa->status === 'Belum Diperiksa')
+                                            <a href="{{ route('dokter.periksa.form', $periksa->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-syringe"></i>&nbsp; Periksa</a>
+                                        @else
+                                            <a href="{{ route('dokter.edit.form', $periksa->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>&nbsp; Edit</a>
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

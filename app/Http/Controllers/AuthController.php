@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
-    public function form()
+    public function showLoginForm()
     {
         return view('login');
     }
@@ -28,12 +28,9 @@ class AuthController extends Controller
 
             // Arahkan berdasarkan role
             $user = Auth::user();
-            if ($user->role === 'dokter') {
-                return redirect()->intended('/dashboard');
-            } elseif ($user->role === 'pasien') {
+            if (in_array($user->role, ['admin', 'dokter', 'pasien'])) {
                 return redirect()->intended('/dashboard');
             }
-
             // Default fallback
             return redirect()->intended('/');
         }
@@ -57,6 +54,7 @@ class AuthController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'alamat' => ['required', 'string', 'max:255'],
             'no_hp' => ['required', 'string', 'max:15'],
+            'no_ktp' => ['required', 'string', 'max:20', 'unique:users,no_ktp'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
         ]);
@@ -67,7 +65,17 @@ class AuthController extends Controller
                         ->withInput();
         }
 
-        // Membuat user baru
+        // Generate no_rm sama persis dengan logic admin (tahunBulan-urutan)
+        $now = now();
+        $tahunBulan = $now->format('Ym');
+        $urutan = 1;
+        do {
+            $no_rm = $tahunBulan . '-' . $urutan;
+            $exists = \App\Models\User::where('no_rm', $no_rm)->exists();
+            $urutan++;
+        } while ($exists);
+
+        // Membuat user baru dengan no_rm yang pasti unik
         $user = User::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
@@ -75,7 +83,8 @@ class AuthController extends Controller
             'role' => 'pasien',
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            
+            'no_ktp' => $request->no_ktp,
+            'no_rm' => $no_rm,
         ]);
 
         // Login pengguna setelah registrasi

@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('alamat');
-            $table->string('no_hp')->unique();
             $table->string('role');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // Field khusus pasien
+            $table->string('no_ktp', 30)->unique()->nullable();
+            $table->string('no_rm', 20)->unique()->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('no_hp')->nullable();
+            // Field khusus dokter
+            $table->unsignedBigInteger('id_poli')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
